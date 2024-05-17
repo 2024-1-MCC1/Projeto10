@@ -3,20 +3,20 @@ Projeto10
 
 ## UnderOcean
 
-## Introduction
-UnderOcean is a Unity game project developed by a team of four students from FECAP (Fundação Escola de Comércio Álvares Penteado). The game aims to raise awareness about the importance of preserving marine life, aligned with the Sustainable Development Goal (SDG) 14: Life Below Water.
+## Introdução
+UnderOcean é um projeto de jogo Unity desenvolvido por uma equipe de quatro alunos da FECAP (Fundação Escola de Comércio Álvares Penteado). O jogo tem como objetivo conscientizar sobre a importância da preservação da vida marinha, alinhado ao Objetivo de Desenvolvimento Sustentável (ODS) 14: Vida Abaixo da Água.
 
-## Overview
-In UnderOcean, players embark on an underwater adventure to protect marine ecosystems from various threats. Through engaging gameplay and educational content, the game educates players about the challenges facing oceans and the actions they can take to contribute to marine conservation efforts.
+## Resumo
+Em UnderOcean, os jogadores embarcam em uma aventura subaquática para proteger os ecossistemas marinhos de várias ameaças. Através de jogabilidade envolvente e conteúdo educativo
 
-## Installation
-To play UnderOcean, follow these steps:
-1. Clone the repository to your local machine.
-2. Open the project in Unity.
-3. Build and run the game on your preferred platform.
+## Como instalar
+Para jogar UnderOcean, siga estes passos:
+1. Clone o repositório para sua máquina local.
+2. Abra o projeto no Unity.
+3. Construa e execute o jogo em sua plataforma preferida.
 
 ## Contributing
-We welcome contributions from the community to improve UnderOcean and expand its impact. If you'd like to contribute, please fork the repository, make your changes, and submit a pull request detailing your modifications.
+Agradecemos as contribuições da comunidade para melhorar o UnderOcean e expandir seu impacto. Se você quiser contribuir, faça uma bifurcação no repositório, faça suas alterações e envie uma solicitação pull detalhando suas modificações.
 
 ## Credits
 - **Development Team:**
@@ -26,7 +26,7 @@ We welcome contributions from the community to improve UnderOcean and expand its
   - Arthur Rodrigues
 
 ## Feedback
-We value your feedback! If you have any suggestions, bug reports, or questions about UnderOcean, please don't hesitate to say.
+Valorizamos o seu feedback! Se você tiver sugestões, relatórios de bugs ou perguntas sobre o UnderOcean, não hesite em dizer.
 
 ## License
 
