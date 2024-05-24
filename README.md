@@ -6,7 +6,7 @@
 
 ## UnderOcean
 
-## Integrantes: ## Integrantes: <a href="https://github.com/IsraelRibeiro05">Israel Ribeiro Ramos</a>, <a href="https://github.com/GustavoDinizFroes">Gustavo Diniz Froes</a>, <a href="https://github.com/ArthurRFerr">Arthur Rodrigues Ferreira</a>, <a href="https://github.com/saulosw">Saulo Pereira de Jesus</a>
+## Integrantes: <a href="https://github.com/IsraelRibeiro05">Israel Ribeiro Ramos</a>, <a href="https://github.com/GustavoDinizFroes">Gustavo Diniz Froes</a>, <a href="https://github.com/ArthurRFerr">Arthur Rodrigues Ferreira</a>, <a href="https://github.com/saulosw">Saulo Pereira de Jesus</a>
 
 ## Professores Orientadores: <a href="https://www.linkedin.com/in/victorbarq/">Victor Bruno Alexander Rosetti de Quiroz</a>, <a href=" ">Fabiano Alves Onça</a> 
 
