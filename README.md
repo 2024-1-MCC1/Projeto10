@@ -14,7 +14,7 @@
 ## Descrição
 
 <p align="center">
-<img src=>![Imagem do Jogo](image-2.png)
+<img src="https://github.com/2024-1-MCC1/Projeto10/blob/main/ImagensJogo/UnderOcean.png" alt="UnderOcean Template" border="0">
 <p align="center"> 
 
 ## Introdução
