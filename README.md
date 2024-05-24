@@ -10,9 +10,7 @@ Em UnderOcean, os jogadores embarcam em uma aventura subaquática para proteger 
 
 ## Como instalar
 Para jogar UnderOcean, siga estes passos:
-1. Clone o repositório para sua máquina local.
-2. Abra o projeto no Unity.
-3. Construa e execute o jogo em sua plataforma preferida.
+Encontre o UnderOcean_.exe na pasta executável e execute-o.
 
 ## Contributing
 Agradecemos as contribuições da comunidade para melhorar o UnderOcean e expandir seu impacto. Se você quiser contribuir, faça uma bifurcação no repositório, faça suas alterações e envie uma solicitação pull detalhando suas modificações.
