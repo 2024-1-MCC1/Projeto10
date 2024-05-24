@@ -1,101 +1,104 @@
 ﻿using UnityEngine;
 
+
+using UnityEngine;
+
 namespace LowPolyWater
 {
     public class LowPolyWater : MonoBehaviour
     {
-        public float waveHeight = 0.5f;
-        public float waveFrequency = 0.5f;
-        public float waveLength = 0.75f;
+        public float alturaOnda = 0.5f; // Altura da onda
+        public float frequenciaOnda = 0.5f; // Frequência da onda
+        public float comprimentoOnda = 0.75f; // Comprimento da onda
 
-        //Position where the waves originate from
-        public Vector3 waveOriginPosition = new Vector3(0.0f, 0.0f, 0.0f);
+        // Posição de onde as ondas se originam
+        public Vector3 posicaoOrigemOnda = new Vector3(0.0f, 0.0f, 0.0f);
 
-        MeshFilter meshFilter;
-        Mesh mesh;
+        MeshFilter filtroDeMalha;
+        Mesh malha;
         Vector3[] vertices;
 
         private void Awake()
         {
-            //Get the Mesh Filter of the gameobject
-            meshFilter = GetComponent<MeshFilter>();
+            // Obter o Filtro de Malha do objeto
+            filtroDeMalha = GetComponent<MeshFilter>();
         }
 
         void Start()
         {
-            CreateMeshLowPoly(meshFilter);
+            CriarMalhaBaixaResolucao(filtroDeMalha);
         }
 
         /// <summary>
-        /// Rearranges the mesh vertices to create a 'low poly' effect
+        /// Rearranja os vértices da malha para criar um efeito de 'baixa resolução'
         /// </summary>
-        /// <param name="mf">Mesh filter of gamobject</param>
+        /// <param name="mf">Filtro de malha do objeto</param>
         /// <returns></returns>
-        MeshFilter CreateMeshLowPoly(MeshFilter mf)
+        MeshFilter CriarMalhaBaixaResolucao(MeshFilter mf)
         {
-            mesh = mf.sharedMesh;
+            malha = mf.sharedMesh;
 
-            //Get the original vertices of the gameobject's mesh
-            Vector3[] originalVertices = mesh.vertices;
+            // Obter os vértices originais da malha do objeto
+            Vector3[] verticesOriginais = malha.vertices;
 
-            //Get the list of triangle indices of the gameobject's mesh
-            int[] triangles = mesh.triangles;
+            // Obter a lista de índices de triângulos da malha do objeto
+            int[] triangulos = malha.triangles;
 
-            //Create a vector array for new vertices 
-            Vector3[] vertices = new Vector3[triangles.Length];
-            
-            //Assign vertices to create triangles out of the mesh
-            for (int i = 0; i < triangles.Length; i++)
+            // Criar uma matriz de vetores para os novos vértices
+            Vector3[] vertices = new Vector3[triangulos.Length];
+
+            // Atribuir vértices para criar triângulos a partir da malha
+            for (int i = 0; i < triangulos.Length; i++)
             {
-                vertices[i] = originalVertices[triangles[i]];
-                triangles[i] = i;
+                vertices[i] = verticesOriginais[triangulos[i]];
+                triangulos[i] = i;
             }
 
-            //Update the gameobject's mesh with new vertices
-            mesh.vertices = vertices;
-            mesh.SetTriangles(triangles, 0);
-            mesh.RecalculateBounds();
-            mesh.RecalculateNormals();
-            this.vertices = mesh.vertices;
+            // Atualizar a malha do objeto com os novos vértices
+            malha.vertices = vertices;
+            malha.SetTriangles(triangulos, 0);
+            malha.RecalculateBounds();
+            malha.RecalculateNormals();
+            this.vertices = malha.vertices;
 
             return mf;
         }
-        
+
         void Update()
         {
-            GenerateWaves();
+            GerarOndas();
         }
 
         /// <summary>
-        /// Based on the specified wave height and frequency, generate 
-        /// wave motion originating from waveOriginPosition
+        /// Com base na altura e frequência da onda especificadas, gera
+        /// movimento de onda originário da posição de origem da onda
         /// </summary>
-        void GenerateWaves()
+        void GerarOndas()
         {
             for (int i = 0; i < vertices.Length; i++)
             {
                 Vector3 v = vertices[i];
 
-                //Initially set the wave height to 0
+                // Inicialmente define a altura da onda como 0
                 v.y = 0.0f;
 
-                //Get the distance between wave origin position and the current vertex
-                float distance = Vector3.Distance(v, waveOriginPosition);
-                distance = (distance % waveLength) / waveLength;
+                // Obtém a distância entre a posição de origem da onda e o vértice atual
+                float distancia = Vector3.Distance(v, posicaoOrigemOnda);
+                distancia = (distancia % comprimentoOnda) / comprimentoOnda;
 
-                //Oscilate the wave height via sine to create a wave effect
-                v.y = waveHeight * Mathf.Sin(Time.time * Mathf.PI * 2.0f * waveFrequency
-                + (Mathf.PI * 2.0f * distance));
-                
-                //Update the vertex
+                // Oscila a altura da onda via seno para criar um efeito de onda
+                v.y = alturaOnda * Mathf.Sin(Time.time * Mathf.PI * 2.0f * frequenciaOnda
+                + (Mathf.PI * 2.0f * distancia));
+
+                // Atualiza o vértice
                 vertices[i] = v;
             }
 
-            //Update the mesh properties
-            mesh.vertices = vertices;
-            mesh.RecalculateNormals();
-            mesh.MarkDynamic();
-            meshFilter.mesh = mesh;
+            // Atualiza as propriedades da malha
+            malha.vertices = vertices;
+            malha.RecalculateNormals();
+            malha.MarkDynamic();
+            filtroDeMalha.mesh = malha;
         }
     }
 }

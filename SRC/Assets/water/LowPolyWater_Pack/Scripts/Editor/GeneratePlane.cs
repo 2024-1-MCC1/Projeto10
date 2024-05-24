@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿
+using UnityEngine;
 using UnityEditor;
 using System.IO;
 
@@ -6,123 +7,123 @@ namespace LowPolyWater
 {
     public class GeneratePlane : ScriptableWizard
     {
-        public string objectName;           //Optional name that can given to created plane gameobject
+        public string nomeObjeto;            // Nome opcional que pode ser atribuído ao objeto plano criado
 
-        public int widthSegments = 1;       //Number of pieces for dividing plane vertically
-        public int heightSegments = 1;      //Number of pieces for dividing plane horizontally
-        public float planeWidth = 1.0f;     
-        public float planeHeight = 1.0f;    
+        public int segmentosLargura = 1;     // Número de segmentos para dividir o plano verticalmente
+        public int segmentosAltura = 1;      // Número de segmentos para dividir o plano horizontalmente
+        public float larguraPlano = 1.0f;
+        public float alturaPlano = 1.0f;
 
-        public bool addCollider = false;    //Add box collider?
-        public Material material;           //By default, it is assigned to 'LowPolyWaterMaterial' in the editor
+        public bool adicionarColisor = false;    // Adicionar colisor de caixa?
+        public Material material;                // Por padrão, é atribuído a 'LowPolyWaterMaterial' no editor
 
         static Camera cam;
-        static Camera lastUsedCam;
+        static Camera ultimaCameraUsada;
 
-        //Generated plane meshes are saved and loaded from Plane Meshes folder (you can change it to whatever you want)
-        public static string assetSaveLocation = "Assets/Low Poly Water/Plane Meshes/";
+        // As malhas de plano geradas são salvas e carregadas da pasta Plane Meshes (você pode alterá-la para o que desejar)
+        public static string localSalvamentoAtivo = "Assets/Low Poly Water/Plane Meshes/";
 
         [MenuItem("GameObject/LowPoly Water/Generate Water Plane...")]
-        static void CreateWizard()
+        static void CriarAssistente()
         {
             cam = Camera.current;
-            // Hack because camera.current doesn't return editor camera if scene view doesn't have focus
+            // Hack porque camera.current não retorna a câmera do editor se a visualização da cena não tiver foco
             if (!cam)
             {
-                cam = lastUsedCam;
+                cam = ultimaCameraUsada;
             }
             else
             {
-                lastUsedCam = cam;
+                ultimaCameraUsada = cam;
             }
 
-            //Check if the asset save location folder exists
-            //If the folder doesn't exists, create it
-            if (!Directory.Exists(assetSaveLocation))
+            // Verifique se a pasta de local de salvamento de ativos existe
+            // Se a pasta não existir, crie-a
+            if (!Directory.Exists(localSalvamentoAtivo))
             {
-                Directory.CreateDirectory(assetSaveLocation);
+                Directory.CreateDirectory(localSalvamentoAtivo);
             }
 
-            //Open Wizard
-            DisplayWizard("Generate Water Plane", typeof(GeneratePlane));
+            // Abrir Assistente
+            DisplayWizard("Gerar Plano de Água", typeof(GeneratePlane));
         }
 
         void OnWizardUpdate()
         {
-            //Max segment number is 254, because a mesh can't have more 
-            //than 65000 vertices (254^2 = 64516 max. number of vertices)
-            widthSegments = Mathf.Clamp(widthSegments, 1, 254);
-            heightSegments = Mathf.Clamp(heightSegments, 1, 254);
+            // O número máximo de segmentos é 254, porque uma malha não pode ter mais
+            // do que 65000 vértices (254^2 = 64516 número máximo de vértices)
+            segmentosLargura = Mathf.Clamp(segmentosLargura, 1, 254);
+            segmentosAltura = Mathf.Clamp(segmentosAltura, 1, 254);
         }
 
         private void OnWizardCreate()
         {
-            //Create an empty gamobject
-            GameObject plane = new GameObject();
+            // Cria um objeto vazio
+            GameObject plano = new GameObject();
 
-            //If user hasn't assigned a name, by default object name is 'Plane'
-            if (string.IsNullOrEmpty(objectName))
+            // Se o usuário não atribuiu um nome, por padrão o nome do objeto é 'Plano'
+            if (string.IsNullOrEmpty(nomeObjeto))
             {
-                plane.name = "Plane";
+                plano.name = "Plano";
             }
             else
             {
-                plane.name = objectName;
+                plano.name = nomeObjeto;
             }
 
-            //Create Mesh Filter and Mesh Renderer components
-            MeshFilter meshFilter = plane.AddComponent(typeof(MeshFilter)) as MeshFilter;
-            MeshRenderer meshRenderer = plane.AddComponent((typeof(MeshRenderer))) as MeshRenderer;
-            meshRenderer.sharedMaterial = material;
+            // Cria componentes Filtro de Malha e Renderizador de Malha
+            MeshFilter filtroDeMalha = plano.AddComponent(typeof(MeshFilter)) as MeshFilter;
+            MeshRenderer renderizadorDeMalha = plano.AddComponent((typeof(MeshRenderer))) as MeshRenderer;
+            renderizadorDeMalha.sharedMaterial = material;
 
-            //Generate a name for the mesh that will be created
-            string planeMeshAssetName = plane.name + widthSegments + "x" + heightSegments
-                                        + "W" + planeWidth + "H" + planeHeight + ".asset";
+            // Gera um nome para a malha que será criada
+            string nomeMalhaPlano = plano.name + segmentosLargura + "x" + segmentosAltura
+                                        + "W" + larguraPlano + "H" + alturaPlano + ".asset";
 
-            //Load the mesh from the save location
-            Mesh m = (Mesh)AssetDatabase.LoadAssetAtPath(assetSaveLocation + planeMeshAssetName, typeof(Mesh));
+            // Carrega a malha do local de salvamento
+            Mesh m = (Mesh)AssetDatabase.LoadAssetAtPath(localSalvamentoAtivo + nomeMalhaPlano, typeof(Mesh));
 
-            //If there isn't a mesh located under assets, create the mesh
+            // Se não houver uma malha localizada em ativos, cria a malha
             if (m == null)
             {
                 m = new Mesh();
-                m.name = plane.name;
+                m.name = plano.name;
 
-                int hCount2 = widthSegments + 1;
-                int vCount2 = heightSegments + 1;
-                int numTriangles = widthSegments * heightSegments * 6;
+                int hCount2 = segmentosLargura + 1;
+                int vCount2 = segmentosAltura + 1;
+                int numTriangles = segmentosLargura * segmentosAltura * 6;
                 int numVertices = hCount2 * vCount2;
 
                 Vector3[] vertices = new Vector3[numVertices];
                 Vector2[] uvs = new Vector2[numVertices];
                 int[] triangles = new int[numTriangles];
                 Vector4[] tangents = new Vector4[numVertices];
-                Vector4 tangent = new Vector4(1f, 0f, 0f, -1f);
-                Vector2 anchorOffset = Vector2.zero;
+                Vector4 tangente = new Vector4(1f, 0f, 0f, -1f);
+                Vector2 deslocamentoAncora = Vector2.zero;
 
                 int index = 0;
-                float uvFactorX = 1.0f / widthSegments;
-                float uvFactorY = 1.0f / heightSegments;
-                float scaleX = planeWidth / widthSegments;
-                float scaleY = planeHeight / heightSegments;
+                float fatorUVX = 1.0f / segmentosLargura;
+                float fatorUVY = 1.0f / segmentosAltura;
+                float escalaX = larguraPlano / segmentosLargura;
+                float escalaY = alturaPlano / segmentosAltura;
 
-                //Generate the vertices
+                // Gera os vértices
                 for (float y = 0.0f; y < vCount2; y++)
                 {
                     for (float x = 0.0f; x < hCount2; x++)
                     {
-                        vertices[index] = new Vector3(x * scaleX - planeWidth / 2f - anchorOffset.x, 0.0f, y * scaleY - planeHeight / 2f - anchorOffset.y);
+                        vertices[index] = new Vector3(x * escalaX - larguraPlano / 2f - deslocamentoAncora.x, 0.0f, y * escalaY - alturaPlano / 2f - deslocamentoAncora.y);
 
-                        tangents[index] = tangent;
-                        uvs[index++] = new Vector2(x * uvFactorX, y * uvFactorY);
+                        tangents[index] = tangente;
+                        uvs[index++] = new Vector2(x * fatorUVX, y * fatorUVY);
                     }
                 }
 
-                //Reset the index and generate triangles
+                // Resetar o índice e gerar os triângulos
                 index = 0;
-                for (int y = 0; y < heightSegments; y++)
+                for (int y = 0; y < segmentosAltura; y++)
                 {
-                    for (int x = 0; x < widthSegments; x++)
+                    for (int x = 0; x < segmentosLargura; x++)
                     {
                         triangles[index] = (y * hCount2) + x;
                         triangles[index + 1] = ((y + 1) * hCount2) + x;
@@ -135,30 +136,30 @@ namespace LowPolyWater
                     }
                 }
 
-                //Update the mesh properties (vertices, UVs, triangles, normals etc.)
+                // Atualiza as propriedades da malha (vértices, UVs, triângulos, normais etc.)
                 m.vertices = vertices;
                 m.uv = uvs;
                 m.triangles = triangles;
                 m.tangents = tangents;
                 m.RecalculateNormals();
 
-                //Save the newly created mesh under save location to reload later
-                AssetDatabase.CreateAsset(m, assetSaveLocation + planeMeshAssetName);
+                // Salva a malha recém-criada no local de salvamento para recarregar mais tarde
+                AssetDatabase.CreateAsset(m, localSalvamentoAtivo + nomeMalhaPlano);
                 AssetDatabase.SaveAssets();
             }
 
-            //Update mesh
-            meshFilter.sharedMesh = m;
+            // Atualiza malha
+            filtroDeMalha.sharedMesh = m;
             m.RecalculateBounds();
 
-            //If add collider is set to true, add a box collider
-            if (addCollider)
-                plane.AddComponent(typeof(BoxCollider));
+            // Se adicionar colisor estiver definido como verdadeiro, adicione um colisor de caixa
+            if (adicionarColisor)
+                plano.AddComponent(typeof(BoxCollider));
 
-            //Add LowPolyWater as component
-            plane.AddComponent<LowPolyWater>();
-            
-            Selection.activeObject = plane;
+            // Adicione LowPolyWater como componente
+            plano.AddComponent<LowPolyWater>();
+
+            Selection.activeObject = plano;
         }
     }
 }
