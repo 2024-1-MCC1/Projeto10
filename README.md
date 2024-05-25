@@ -25,6 +25,26 @@ Em UnderOcean, os jogadores embarcam em uma aventura subaquática para proteger 
 ## Feedback
 Valorizamos o seu feedback! Se você tiver sugestões, relatórios de bugs ou perguntas sobre o UnderOcean, não hesite em dizer.
 
+## 🛠 Estrutura de pastas
+
+-Raiz<br>
+|<br>
+|-->documentos<br>
+  &emsp;|-->relatório do projeto.pdf <br>
+  &emsp;|Template do projeto<br>
+|-->executável<br>
+  &emsp;|-->Executável.rar<br>
+  &emsp;|-->html.zip<br>
+|-->ImagensJogo<br>
+  &emsp;|-->FotoMenu.png<br>
+  &emsp;|-->UnderOcean.png<br>
+  &emsp;|-->foto1.png<br>
+|-->SRC<br>
+   &emsp;|-->GameArchive<br>
+|readme.md<br>
+
+
+
 ## 🛠 Instalação
 Para jogar UnderOcean, siga estes passos:
 Encontre o UnderOcean_.exe na pasta executável e execute-o.
